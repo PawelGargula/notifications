@@ -1,7 +1,6 @@
 // DOM elements
-const notificationIcon = document.querySelector('#notifications')
-const notificationCount = document.querySelector('.badge.badge-warning.navbar-badge');
-const notificationsContent = document.querySelector('#notifications .dropdown-menu');
+const notificationCountDOM = document.querySelector('.badge.badge-warning.navbar-badge');
+const notificationsContentDOM = document.querySelector('#notifications .dropdown-menu');
 
 setInterval(updateNotification, 5000);
 
@@ -10,18 +9,18 @@ async function updateNotification() {
     const date = new Date();
     const count = date.getMinutes();
     
-    if (notificationCount.textContent !== count.toString()) {
-        notificationCount.textContent = count;
+    if (notificationCountDOM.textContent !== count.toString()) {
+        notificationCountDOM.textContent = count;
         
         animateNotificationCount();
 
-        notificationsContent.innerHTML = '';
+        notificationsContentDOM.innerHTML = '';
 
         const header = createHeader(count);
 
         const dropdownDivider = createDropDownDivider();
 
-        notificationsContent.append(header, dropdownDivider);
+        notificationsContentDOM.append(header, dropdownDivider);
 
         // Fetch notifications content
         const notifications = [
@@ -35,11 +34,11 @@ async function updateNotification() {
         // Simulate time to fetch (500ms)
         await new Promise(x => setTimeout(x, 500));
 
-        appendNotifications(notifications, notificationsContent);
+        appendNotifications(notifications, notificationsContentDOM);
 
         const seeAll = createSeeAll();
 
-        notificationsContent.appendChild(seeAll);
+        notificationsContentDOM.appendChild(seeAll);
     } 
 }
 
@@ -55,7 +54,7 @@ function animateNotificationCount() {
         iterations: 1
     }
 
-    notificationCount.animate(growing, timing);
+    notificationCountDOM.animate(growing, timing);
 }
 
 function createHeader(count) {
@@ -71,7 +70,7 @@ function createDropDownDivider() {
     return dropdownDivider;
 }
 
-function appendNotifications(notifications, notificationsContent) {
+function appendNotifications(notifications, notificationsContentDOM) {
     notifications.forEach(notification => {
         const item = document.createElement('a');
         item.classList.add('dropdown-item');
@@ -89,7 +88,7 @@ function appendNotifications(notifications, notificationsContent) {
         const dropdownDivider = createDropDownDivider();
 
         item.append(icon, text, time);
-        notificationsContent.append(item, dropdownDivider);
+        notificationsContentDOM.append(item, dropdownDivider);
     });
 }
 
